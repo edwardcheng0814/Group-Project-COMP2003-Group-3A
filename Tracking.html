@@ -1,0 +1,428 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <title>Birdhub - Track</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="generator" content="Birdhub" />
+    <link
+      rel="stylesheet"
+      href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.1/dist/css/bootstrap.min.css"
+    />
+
+    <script>
+      function initMap() {
+        // Set the map options
+        var mapOptions = {
+          zoom: 11,
+          center: { lat: 22.3193, lng: 114.1694 },
+          mapTypeId: google.maps.MapTypeId.ROADMAP,
+          restriction: {
+            latLngBounds: {
+              north: 22.5675,
+              south: 22.1531,
+              east: 114.4346,
+              west: 113.8259,
+            },
+            strictBounds: true,
+          },
+        };
+
+        // Create the map object
+        var map = new google.maps.Map(
+          document.getElementById("map"),
+          mapOptions
+        );
+      }
+
+      window.onload = function () {
+        initMap();
+      };
+    </script>
+
+    <style>
+      body {
+        -moz-font-feature-settings: "liga" on;
+        -moz-osx-font-smoothing: grayscale;
+        -webkit-font-smoothing: antialiased;
+        font-feature-settings: "liga" on;
+        text-rendering: optimizeLegibility;
+        background-image: url("background.JPG");
+        background-size: cover;
+      }
+
+      /* Set navbar to transparent */
+      .navbar {
+        background-color: transparent !important;
+      }
+
+      /* Move navbar links to right */
+      .navbar-nav {
+        margin-left: auto;
+      }
+
+      .navbar-brand {
+        font-size: 1.5rem;
+        font-weight: bold;
+      }
+
+      /* Make navbar links bold */
+      .navbar-nav .nav-link {
+        font-weight: bold;
+      }
+
+      .card {
+        margin-bottom: 50px;
+      }
+
+      .footer {
+        background-color: black;
+        color: white;
+        padding: 40px 0;
+        margin-top: 50px;
+      }
+
+      .footer a {
+        color: white;
+      }
+
+      .footer a:hover {
+        color: #ccc;
+      }
+
+      .footer .list-inline-item:not(:last-child) {
+        margin-right: 20px;
+      }
+
+      .header-inner h1 {
+        font-size: 3rem;
+        font-weight: bold;
+        color: white;
+        text-shadow: 1px 1px 3px rgba(0, 0, 0, 0.5);
+        text-align: center;
+      }
+
+      #tracking-form .form-group {
+        margin-bottom: 20px;
+      }
+
+      #tracking-form .form-group label {
+        font-size: 1.5rem;
+        font-weight: bold;
+      }
+
+      #tracking-form .form-group input {
+        width: 100%;
+        padding: 10px;
+        font-size: 1.2rem;
+        border-radius: 5px;
+        border: 1px solid #ccc;
+      }
+
+      #tracking-form button {
+        margin-top: 20px;
+        padding: 10px 20px;
+        font-size: 1.2rem;
+        font-weight: bold;
+        border-radius: 5px;
+        background-color: #007bff;
+        color: white;
+        border: none;
+        cursor: pointer;
+      }
+
+      #map-container {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+      }
+
+      #map {
+        height: 500px;
+        width: 100%;
+        margin: 0;
+      }
+
+      .back-btn {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+      }
+
+      .back-btn button {
+        padding: 10px 20px;
+        font-size: 1.2rem;
+        font-weight: bold;
+        border-radius: 5px;
+        background-color: #007bff;
+        color: white;
+        border: none;
+        cursor: pointer;
+      }
+      .message {
+        font-weight: bold;
+        padding: 10px;
+      }
+
+      .error {
+        color: red;
+      }
+
+      .success {
+        color: green;
+      }
+    </style>
+  </head>
+
+  <body>
+    <!-- Navigation -->
+    <nav class="navbar navbar-expand-lg navbar-lightbg-light">
+      <div class="container-fluid">
+        <a class="navbar-brand" href="Homepage.html"
+          ><i class="fas fa-dove"></i> Birdhub</a
+        >
+        <button
+          class="navbar-toggler"
+          type="button"
+          data-bs-toggle="collapse"
+          data-bs-target="#navbarNav"
+          aria-controls="navbarNav"
+          aria-expanded="false"
+          aria-label="Toggle navigation"
+        >
+          <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarNav">
+          <ul class="navbar-nav">
+            <li class="nav-item">
+              <a class="nav-link" href="Submit.html">Submit</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="Tracking.html">Tracking</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="MyeBird.html">My eBird</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="Help.html">Help</a>
+            </li>
+          </ul>
+          <div class="ms-3">
+            <a href="login.html" class="btn btn-primary me-2">Sign In</a>
+            <a href="signup.html" class="btn btn-outline-primary"
+              >Get Started</a
+            >
+          </div>
+        </div>
+      </div>
+    </nav>
+
+    <!-- Header -->
+    <header class="header">
+      <div class="header-inner">
+        <h1>Bird Sighting Tracker</h1>
+      </div>
+    </header>
+
+    <!-- Tracking Form -->
+    <div class="container">
+      <div class="card">
+        <div class="card-body">
+          <h2 class="card-title">Enter Your Sighting Information</h2>
+          <form id="tracking-form">
+            <div class="form-group mb-5">
+              <label for="location">Location:</label>
+              <select name="location" id="location">
+                <option value="" selected disabled>Select a district</option>
+                <option value="Central and Western">Central and Western</option>
+                <option value="Eastern">Eastern</option>
+                <option value="Southern">Southern</option>
+                <option value="Wan Chai">Wan Chai</option>
+                <option value="Sham Shui Po">Sham Shui Po</option>
+                <option value="Kowloon City">Kowloon City</option>
+                <option value="Kwun Tong">Kwun Tong</option>
+                <option value="Wong Tai Sin">Wong Tai Sin</option>
+                <option value="Yau Tsim Mong">Yau Tsim Mong</option>
+                <option value="Islands">Islands</option>
+                <option value="Kwai Tsing">Kwai Tsing</option>
+                <option value="North">North</option>
+                <option value="Sai Kung">Sai Kung</option>
+                <option value="Sha Tin">Sha Tin</option>
+                <option value="Tai Po">Tai Po</option>
+                <option value="Tsuen Wan">Tsuen Wan</option>
+                <option value="Tuen Mun">Tuen Mun</option>
+                <option value="Yuen Long">Yuen Long</option>
+              </select>
+            </div>
+            <div class="form-group mb-3">
+              <label for="date">Date</label>
+              <input type="date" class="form-control" id="date" />
+            </div>
+
+            <div class="form-group mb-3">
+              <label for="family">Family:</label>
+              <select id="family" name="family" required>
+                <option value="">Select a family</option>
+                <option value="Accipitridae">Accipitridae</option>
+                <option value="Alcedinidae">Alcedinidae</option>
+                <option value="Anatidae">Anatidae</option>
+                <option value="Apodidae">Apodidae</option>
+                <option value="Ardeidae">Ardeidae</option>
+                <option value="Columbidae">Columbidae</option>
+                <option value="Corvidae">Corvidae</option>
+                <option value="Falconidae">Falconidae</option>
+                <option value="Fringillidae">Fringillidae</option>
+                <option value="Hirundinidae">Hirundinidae</option>
+                <option value="Icteridae">Icteridae</option>
+                <option value="Muscicapidae">Muscicapidae</option>
+                <option value="Paridae">Paridae</option>
+                <option value="Passeridae">Passeridae</option>
+                <option value="Phalacrocoracidae">Phalacrocoracidae</option>
+                <option value="Phasianidae">Phasianidae</option>
+                <option value="Picidae">Picidae</option>
+                <option value="Podicipedidae">Podicipedidae</option>
+                <option value="Scolopacidae">Scolopacidae</option>
+                <option value="Strigidae">Strigidae</option>
+                <option value="Sturnidae">Sturnidae</option>
+                <option value="Turdidae">Turdidae</option>
+              </select>
+            </div>
+            <button id="submit-button">Track</button>
+          </form>
+        </div>
+      </div>
+    </div>
+
+    <div id="map"></div>
+
+    <!-- Map Container -->
+    <div id="sightings"></div>
+
+    <script>
+      document
+        .getElementById("submit-button")
+        .addEventListener("click", function (event) {
+          var address = document.getElementById("location").value;
+          var family = document.getElementById("family").value;
+          geocodeAddress(address, family);
+        });
+    </script>
+
+    <script>
+      function geocodeAddress(address, family) {
+        console.log("geocodeAddress() called");
+        // Retrieve the selected date from the form
+        var date = document.getElementById("date").value;
+
+        // Send an AJAX request to the server to retrieve the sightings
+        var xhr = new XMLHttpRequest();
+        xhr.open(
+          "GET",
+          "Tracking.php?address=" +
+            encodeURIComponent(address) +
+            "&date=" +
+            encodeURIComponent(date) +
+            "&family=" +
+            encodeURIComponent(family)
+        );
+        xhr.onload = function () {
+          if (xhr.status === 200) {
+            console.log(xhr.responseText);
+            // Parse the JSON response from the server
+            var response = JSON.parse(xhr.responseText);
+            if (response.status === "OK") {
+              // Loop through each sighting and add a marker to the map
+              response.sightings.forEach(function (sighting) {
+                var location = sighting.location.split(",");
+                var latLng = {
+                  lat: parseFloat(location[0]),
+                  lng: parseFloat(location[1]),
+                };
+                var marker = new google.maps.Marker({
+                  position: latLng,
+                  map: map,
+                  title: sighting.family,
+                  content:
+                    "<h3>" +
+                    sighting.family +
+                    "</h3>" +
+                    "<p><strong>Date:</strong> " +
+                    sighting.date +
+                    "</p>" +
+                    "<p><strong>Address:</strong> " +
+                    sighting.address +
+                    "</p>",
+                });
+              });
+            } else {
+              alert(
+                "No sightings found for the selected location, date, and bird family."
+              );
+            }
+          } else {
+            alert("Request failed. Please try again later.");
+          }
+        };
+        xhr.send();
+      }
+    </script>
+
+    <!-- Footer -->
+    <div class="footer wf-section">
+      <div class="container">
+        <div class="row">
+          <div class="col-md-6">
+            <a class="navbar-brand" href="Homepage.html"
+              ><i class="fas fa-dove"></i> Birdhub</a
+            >
+            <button
+              class="navbar-toggler"
+              type="button"
+              data-bs-toggle="collapse"
+              data-bs-target="#navbarNav"
+              aria-controls="navbarNav"
+              aria-expanded="false"
+              aria-label="Toggle navigation"
+            >
+              <span class="navbar-toggler-icon"></span>
+            </button>
+            <p class="text-muted">
+              &copy; 2023 BirdHub Inc, All rights reserved.
+            </p>
+          </div>
+          <div class="col-md-6">
+            <ul class="list-inline text-md-end">
+              <li class="list-inline-item">
+                <a href="Homepage.html" class="text-decoration-none">Home</a>
+              </li>
+              <li class="list-inline-item">
+                <a href="Submit.html" class="text-decoration-none">Submit</a>
+              </li>
+              <li class="list-inline-item">
+                <a href="MyeBird.html" class="text-decoration-none">MyeBirds</a>
+              </li>
+              <li class="list-inline-item">
+                <a href="Help.html" class="text-decoration-none">Help</a>
+              </li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Bootstrap core JS -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.1/dist/js/bootstrap.bundle.min.js"></script>
+
+    <script
+      src="https://kit.fontawesome.com/e62b5e12dd.js"
+      crossorigin="anonymous"
+    ></script>
+
+    <script
+      src="https://maps.googleapis.com/maps/api/js?key=AIzaSyA3C2EFmxoNp8lAaCL06bO6uFqgICaCp5A&callback=initMap"
+      async
+      defe
+    ></script>
+  </body>
+</html>
